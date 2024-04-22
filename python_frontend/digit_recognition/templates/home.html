@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Classification Web App</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css'%}">
+    <!-- <script src="{% static 'script.js' %}"></script> -->
+</head>
+
+<body>
+    <h1 class="title">Handwritten Digit Prediction</h1>
+    <div class="container">
+        <div class="input-box">
+            <h2>Upload Image</h2>
+            <div class="upload-controls">
+                <input type="file" accept="image/*" id="uploadInput" onchange="previewImage(event)">
+                <button class="clearButton" onclick="clearImage()">Clear</button>
+                <button class="submitButton" onclick="submitImage()">Submit</button>
+            </div>
+            <div class="image-preview-box-1">
+                <div id="imageContainer" class="image-container">
+                    <img id="preview" src="#" alt="Preview Image" style="display: none;">
+                </div>
+            </div>
+        </div>
+
+        <div class="output-box">
+            <h2>Output</h2>
+            <div class="boxes-container">
+                <div class="counter">
+                    <div class="skill-item">
+                        <div class="top-number">
+                            <h3>0</h3>
+                            <h3 class="skill-percent">0%</h3>
+                        </div>
+                        <div class="counter-progress">
+                            <div class="counter-progress-in" style="width:0%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="top-number">
+                            <h3>1</h3>
+                            <h3 class="skill-percent">0%</h3>
+                        </div>
+                        <div class="counter-progress">
+                            <div class="counter-progress-in" style="width:0%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="top-number">
+                            <h3>2</h3>
+                            <h3 class="skill-percent">0%</h3>
+                        </div>
+                        <div class="counter-progress">
+                            <div class="counter-progress-in" style="width:0%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="top-number">
+                            <h3>3</h3>
+                            <h3 class="skill-percent">0%</h3>
+                        </div>
+                        <div class="counter-progress">
+                            <div class="counter-progress-in" style="width:0%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="top-number">
+                            <h3>4</h3>
+                            <h3 class="skill-percent">0%</h3>
+                        </div>
+                        <div class="counter-progress">
+                            <div class="counter-progress-in" style="width:0%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="top-number">
+                            <h3>5</h3>
+                            <h3 class="skill-percent">0%</h3>
+                        </div>
+                        <div class="counter-progress">
+                            <div class="counter-progress-in" style="width:0%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="top-number">
+                            <h3>6</h3>
+                            <h3 class="skill-percent">0%</h3>
+                        </div>
+                        <div class="counter-progress">
+                            <div class="counter-progress-in" style="width:0%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="top-number">
+                            <h3>7</h3>
+                            <h3 class="skill-percent">0%</h3>
+                        </div>
+                        <div class="counter-progress">
+                            <div class="counter-progress-in" style="width:0%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="top-number">
+                            <h3>8</h3>
+                            <h3 class="skill-percent">0%</h3>
+                        </div>
+                        <div class="counter-progress">
+                            <div class="counter-progress-in" style="width:0%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="top-number">
+                            <h3>9</h3>
+                            <h3 class="skill-percent">0%</h3>
+                        </div>
+                        <div class="counter-progress">
+                            <div class="counter-progress-in" style="width:0%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="prediction">
+                <p>Prediction: <span id="predictionNumber"> # </span></p>
+                <p id="latency">Latency: 0.00s</p>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        // Clear Image
+        function clearImage() {
+            var uploadInput = document.getElementById('uploadInput');
+            uploadInput.value = ''; // Clear the input value
+            var preview = document.getElementById('preview');
+            preview.style.display = 'none'; // Hide the preview image
+
+            // Reset percentages and progress bars
+            var skillItems = document.querySelectorAll('.skill-item');
+            skillItems.forEach(item => {
+                var percent = item.querySelector('.skill-percent');
+                percent.textContent = '0%';
+                var progressBar = item.querySelector('.counter-progress-in');
+                progressBar.style.width = '0%';
+            });
+
+            // Reset prediction number
+            var predictionNumber = document.getElementById('predictionNumber');
+            predictionNumber.textContent = '#';
+
+            // Reset prediction number
+            var latency = document.getElementById('latency');
+            latency.textContent = 'Latency: 0.00s';
+        }
+
+        // Preview Image with Resize
+        function previewImage(event) {
+            var preview = document.getElementById('preview');
+            var uploadInput = document.getElementById('uploadInput');
+            var file = uploadInput.files[0];
+
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function (event) {
+                    // Resize the image
+                    resizeImage(file);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.style.display = 'none';
+            }
+        }
+
+        // Resize Image
+        function resizeImage(file) {
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                var img = new Image();
+                img.onload = function () {
+                    var canvas = document.createElement('canvas');
+                    var maxWidth = 350; // Set maximum width for resized image
+                    var width = img.width;
+                    var height = img.height;
+
+                    if (width > maxWidth) {
+                        height *= maxWidth / width;
+                        width = maxWidth;
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+
+                    var ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    var resizedImage = canvas.toDataURL('image/jpeg', 0.9);
+
+                    // Display the resized image
+                    document.getElementById('preview').src = resizedImage;
+                    document.getElementById('preview').style.display = 'block';
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function submitImage() {
+            var preview = document.getElementById('preview');
+            var imageSrc = preview.src;
+
+            if (imageSrc && imageSrc !== '#') {
+                console.log('Image selected:', imageSrc);
+
+                // Get CSRF token
+                var csrftoken = getCookie('csrftoken');
+
+                // Send a POST request to the backend
+                fetch('{% url "digit_recognition" %}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken  // Include CSRF token in headers
+                    },
+                    body: JSON.stringify({ image: imageSrc })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Update prediction number
+                        document.getElementById('predictionNumber').textContent = data.predicted_digit;
+
+                        // Update percentages for all digits
+                        for (let i = 0; i < 10; i++) {
+                            let digitElement = document.querySelector(`.skill-item:nth-child(${i + 1}) .skill-percent`);
+                            let progressBar = document.querySelector(`.skill-item:nth-child(${i + 1}) .counter-progress-in`);
+                            console.log(data)
+                            // Update percent and progress bar width
+                            digitElement.textContent = `${data.percentages[i]}%`;
+                            progressBar.style.width = `${data.percentages[i]}%`;
+                        }
+
+                        // Display latency
+                        document.getElementById('latency').textContent = `Latency: ${data.latency}s`;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            } else {
+                console.error('No image selected.');
+            }
+        }
+
+
+        // Function to retrieve CSRF token from cookies
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+
+</body>
+
+</html>

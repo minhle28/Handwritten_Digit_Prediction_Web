@@ -1,0 +1,282 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Foldit:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Foldit:wght@100..900&family=Nabla&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+* {
+    box-sizing: border-box;
+    font-family: 'Noto Sans';
+}
+
+:root {
+    --pink: #2BDA8E;
+    --white: rgb(0, 0, 0);
+}
+
+body {
+    /*background-color: #333;*/
+    width: 100%;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* Split into two columns */
+    gap: 20px;
+}
+
+.input-box,
+.output-box {
+    /* Styles for input and output boxes */
+    margin: 0 40px 0 40px;
+    padding: 0 50px 0 50px;
+    border: 2px solid #333;
+    border-radius: 5px;
+    background-color: rgb(250, 250, 250);
+    box-shadow: 0 15px 16.83px 0.17px rgba(0, 0, 0, 0.276);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    color: rgb(85, 0, 255);
+    font-family: 'Nabla';
+    font-size: 50px;
+}
+
+.input-box h2 {
+    color: #ff3e00;
+    font-weight: 800;
+}
+
+.output-box h2 {
+    color: #ff3e00;
+    font-weight: 800;
+}
+
+
+
+.boxes-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.upload-controls button {
+    margin: 0 10px;
+}
+
+.upload-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    width: 80%;
+}
+
+.image-preview-box-1 {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+    width: 80%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+
+.clearButton {
+    z-index: 1;
+    position: relative;
+    color: #ff3e00;
+    padding: 4px 16px;
+    outline: none;
+    border: 1px solid #ff3e00;
+    background-color: transparent;
+    overflow: hidden;
+    transition: color 0.4s ease-in-out;
+}
+
+.clearButton::before {
+    content: '';
+    z-index: -1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #ff3e00;
+    transform-origin: center;
+    transform: translate3d(-50%, -50%, 0) scale3d(0, 0, 0);
+    transition: transform 0.45s ease-in-out;
+}
+
+.submitButton {
+    z-index: 1;
+    position: relative;
+    color: green;
+    padding: 4px 16px;
+    outline: none;
+    border: 1px solid green;
+    background-color: transparent;
+    overflow: hidden;
+    transition: color 0.4s ease-in-out;
+}
+
+.submitButton::before {
+    content: '';
+    z-index: -1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: green;
+    transform-origin: center;
+    transform: translate3d(-50%, -50%, 0) scale3d(0, 0, 0);
+    transition: transform 0.45s ease-in-out;
+}
+
+.clearButton:hover,
+.submitButton:hover {
+    cursor: pointer;
+    color: #fff;
+}
+
+.clearButton:hover::before,
+.submitButton:hover::before {
+    transform: translate3d(-50%, -50%, 0) scale3d(15, 15, 15);
+}
+
+.clearButton,
+.submitButton {
+    font-weight: 500;
+}
+
+.image-preview-box-2 {
+    border: 1px solid #ccc;
+    padding: 10px;
+    /* margin-bottom: 20px; */
+    width: 300px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.preview-box h3 {
+    display: flex;
+    justify-content: center;
+    font-weight: 600;
+}
+
+.preview-box {
+    margin-right: 20px;
+    /* Add margin-bottom to create space */
+}
+
+.formatted-box h3 {
+    display: flex;
+    justify-content: center;
+    font-weight: 600;
+}
+
+.prediction {
+    /* Styles for prediction */
+    display: flex;
+    justify-content: space-around;
+    font-size: 30px;
+    font-weight: 400;
+    color: #ff3e00;
+    width: 100%;
+}
+
+.prediction,
+.statistics {
+    display: flex;
+}
+
+#imageContainer {
+    margin-top: 10px;
+}
+
+.boxes-container .counter {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 10px;
+    column-gap: 40px;
+}
+
+
+.counter {
+    flex: 1 1 30rem;
+    display: block;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+
+.counter .skill-item h3 {
+    color: var(--white);
+    font-size: 16px;
+    text-transform: capitalize;
+
+}
+
+.counter .skill-item .counter-progress {
+    background-color: var(--white);
+    height: 7px;
+    border-radius: 4px;
+}
+
+.counter .counter-progress {
+    margin-bottom: 30px;
+}
+
+.counter .skill-item .counter-progress .counter-progress-in {
+    position: relative;
+    left: 0;
+    top: 0;
+    height: 100%;
+    border-radius: 4px;
+    background-color: var(--pink);
+}
+
+.counter .skill-item .counter-progress .counter-progress-in .skill-percent {
+    color: var(--pink);
+}
+
+
+.counter .box span {
+    font-size: 4rem;
+    color: var(--pink);
+}
+
+.counter .box h3 {
+    color: var(--white);
+}
+
+.top-number {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.skill-percent {
+    display: flex;
+    justify-content: flex-end;
+}
